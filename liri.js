@@ -11,7 +11,7 @@ var Twitter = require('twitter'); //installed
 
 var spotify = require('spotify'); //installed
 
-function spotifySeach(songName) {
+function spotifySeach(song) {
     var song = process.argv[3];
     if(!song){
       song = "The Sign";
@@ -28,7 +28,6 @@ function spotifySeach(songName) {
             "Preview Url: " + songInfo[i].preview_url + "\r\n" + 
             "Album the song is from: " + songInfo[i].album.name + "\r\n";
             console.log(spotifyResults);
-            log(spotifyResults); // calling log function
           }
         }
       } else {
@@ -37,43 +36,7 @@ function spotifySeach(songName) {
       }
     });
   };
-// function spotifySearch (){
- 
-//   var song = process.argv[3];
 
-//   spotify.search({ type: 'track', query: song }, function(err, data) {
-//       if ( err ) {
-//           console.log('Error occurred: ' + err);
-//           return;
-//       }
-
-//   });
-
-
-//     inquirer.prompt([
-//         {
-//             type: 'input',
-//             message: 'Enter song:',
-//             name: "song",
-//             default: parameter
-//         }
-
-//         //once the song is entered, pulls the spotify information
-//     ]).then(function (song) {
-//         var spotifyApi = new Spotify({
-//         });
-
-//         spotifyApi.searchTracks(song.song, {limit: 1}).then(function (data) {
-//             var tracks = data.body.tracks.items;
-//             for (var i in tracks) {
-//                 console.log("Artist: " + tracks[i].artists[0].name);
-//                 console.log("Song: " + tracks[i].name);
-//                 console.log("Preview: " + tracks[i].preview_url);
-//                 console.log("Album: " + tracks[i].album.name);
-//             }
-//         });
-//     });
-// }
 
 var twitterDisplay = function(){
   var client = new Twitter({
@@ -86,9 +49,15 @@ var twitterDisplay = function(){
   var params = {screen_name: '@anna_kimtis'};
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
-      for(i=2, i)
-      console.log(tweets.Date);
-      console.log(tweets.Tweet);
+      for(var i = 0; i <tweets.length; i++) {
+          var twitterResults = 
+          tweets[i].text + "\r\n" + 
+          tweets[i].created_at + "\r\n";
+          console.log(twitterResults); //Please note I only have two tweets so far
+        }
+      }  else {
+        console.log("Error :"+ error);
+        return;
     }
   });
 
