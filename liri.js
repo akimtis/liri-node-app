@@ -11,6 +11,11 @@ var Twitter = require('twitter'); //installed
 
 var spotify = require('spotify'); //installed
 
+var file = require('file-system'); //installed
+var fs = require('fs');
+ 
+file.readFile === fs.readFile // true 
+
 function spotifySeach(song) {
     var song = process.argv[3];
     if(!song){
@@ -53,7 +58,8 @@ var twitterDisplay = function(){
           var twitterResults = 
           tweets[i].text + "\r\n" + 
           tweets[i].created_at + "\r\n";
-          console.log(twitterResults); //Please note I only have two tweets so far
+          console.log(twitterResults); 
+          //I only have two tweets so far but if i were to have 20 how to display them?
         }
       }  else {
         console.log("Error :"+ error);
@@ -78,14 +84,12 @@ var movieSearch = function(){
     };
     console.log(movie);
   }
-  // Then run a request to the OMDB API with the movie specified
+  
   request("http://www.omdbapi.com/?t="+movie+"=&plot=short&r=json", function(error, response, body) {
 
-  // If the request is successful (i.e. if the response status code is 200)
   if (!error && response.statusCode === 200) {
 
-    // Parse the body of the site and recover just the imdbRating
-    // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+
     console.log("The movie's title is: " + JSON.parse(body).Title);
     console.log("The Year the movie was released is: " + JSON.parse(body).Year);
     console.log("The movie's rating is: " + JSON.parse(body).imdbRating);
@@ -96,10 +100,26 @@ var movieSearch = function(){
     console.log("Rotten Tomatoes Rating: " + JSON.parse(body).tomatoRating);
     console.log("Rotten Tomatoes URL: " + JSON.parse(body).tomatoURL);
 
-//     // console.log("The movie's Rotten Tomato's rating is: " + JSON.parse(body).);
-//     // console.log("Rotten Tomato's URL: " + JSON.parse(body).);
+//need to console log Mr. Nobody if person doesn't enter a movie
+
   }
 });
+}
+
+var doWhatItSays = function(){
+
+  fs.readFile("random.txt", "utf8", function (err, data){
+    var output = data.split(",");
+    var onDifLines = output.join('\n')
+    console.log(onDifLines)
+
+  });
+
+// Using the fs Node package, LIRI will take the text inside of random.txt and then 
+// use it to call one of LIRI's commands.
+// It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
+// Feel free to change the text in that document to test out the feature for other commands.
+
 }
 
 switch(nodeArgs[2]) {
@@ -116,23 +136,11 @@ switch(nodeArgs[2]) {
         movieSearch();
         break;
     case "do-what-it-says":
-        console.log("do-what-it-says")
+        console.log("do-what-it-says");
+        doWhatItSays();
         break;
     default:
         console.log("none")
 }
 
-// function spotify() {
 
-
-//     
-
-// function itSays() {
-//     fs.readFile("random.txt", "utf8", function(error, random) {
-//        var randomTxt = random.split(',');
-//         prompt = randomTxt[0];
-//         parameter = randomTxt[1];
-//         movie = randomTxt[1];
-//         switchFunction(prompt);
-//     });
-// }
