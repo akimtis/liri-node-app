@@ -17,7 +17,6 @@ var fs = require('fs');
 file.readFile === fs.readFile // true 
 
 
-
 var spotifySearch = function() {
   console.log("spotifySearching ");
     var song = "";
@@ -97,12 +96,16 @@ var movieSearch = function(){
     }else{
       movie += nodeArgs[i]
     };
+     if (!movie){
+      movie += "Mr. Nobody"
+    };
     console.log("movie "+ movie);
   }
   
   request("http://www.omdbapi.com/?t="+movie+"=&plot=short&r=json", function(error, response, body) {
     if (error){
       console.log(error);
+   
     }
     if (!error && response.statusCode === 200) {
 
@@ -131,11 +134,6 @@ var doWhatItSays = function(){
     console.log(onDifLines)
 
   });
-
-// Using the fs Node package, LIRI will take the text inside of random.txt and then 
-// use it to call one of LIRI's commands.
-// It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
-// Feel free to change the text in that document to test out the feature for other commands.
 
 }
 
